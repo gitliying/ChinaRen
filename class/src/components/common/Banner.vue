@@ -34,13 +34,12 @@ export default {
 <style lang="less" scoped>
   @import '../../styles/main.less';
   .banner{
-    .margin-top(100);
     width: 100%;
-    .h(400);
+    .h(200);
     img{
       display: inline-block;
       width: 100%;
-      .h(400);
+      .h(200);
     }
     
 

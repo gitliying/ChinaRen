@@ -25,12 +25,6 @@ Vue.component(SwipeItem.name, SwipeItem);
 //引入font-awesome字体图标
 import 'font-awesome/css/font-awesome.css';
 
-//引用Muse-ui的 Grid List
-import 'muse-ui/lib/styles/base.less';
-import { GridList } from 'muse-ui';
-import 'muse-ui/lib/styles/theme.less';
-Vue.use(GridList);
-
 
 Vue.config.productionTip = false
 

@@ -1,15 +1,15 @@
 <template>
   <div class="tabbar">
      <mt-tabbar v-model="selected">
-        <mt-tab-item id="消息" class="tabbar-icon">
-            <i slot="icon" class="fa fa-comment" ></i>
-                消息
+        <mt-tab-item id="home" class="tabbar-icon">
+            <i slot="icon" class="fa fa-home" ></i>
+                首页
         </mt-tab-item>
-        <mt-tab-item id="留言板" class="tabbar-icon">
+        <mt-tab-item id="guestbook" class="tabbar-icon">
             <i slot="icon" class="fa fa-telegram" ></i>
                 留言板
         </mt-tab-item>    
-        <mt-tab-item id="个人中心" class="tabbar-icon">
+        <mt-tab-item id="my" class="tabbar-icon">
             <i slot="icon" class="fa fa-user-circle-o" ></i>
                 个人中心
         </mt-tab-item> 
@@ -25,13 +25,13 @@ export default {
   components:{},
   data(){
 	  return{
-        selected: '首页',
+        selected: 'home',
 	  }
   },
    watch: {
       selected: function (val, oldVal) {
         console.log(val) // click后打印出当前mt-tab-item的id
-        
+        this.$router.push(val);
       }
     }
 
@@ -40,8 +40,15 @@ export default {
 
 <style lang="less" scoped>
 @import '../../styles/main.less';
-    tabbar{
-        tabbar-icon{
+    .tabbar{
+        .h(55);
+        .fs(16);
+        color: rgb(179, 172, 172);
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        .tabbar-icon{
             i{
                 display: inline-block;
                 width: 100%;

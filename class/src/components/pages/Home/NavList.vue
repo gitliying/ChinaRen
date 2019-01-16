@@ -1,37 +1,20 @@
 <template>
       <div class="navlist">
-      <mu-container>
-        <mu-flex justify-content="center">
-          <mu-paper :z-depth="1">
-            <!-- <mu-appbar color="primary">
-              <mu-button icon slot="left">
-                <mu-icon value="menu"></mu-icon>
-              </mu-button>
-              Photo -->
-            <!-- </mu-appbar> -->
-            <mu-grid-list class="gridlist-demo">
-              <!-- <mu-sub-header>December</mu-sub-header> -->
-              <mu-grid-tile v-for="(tile, index) in list" :key="index">
-                <img :src="tile.image" >
-                <span slot="title">{{tile.title}}</span>
-                <span slot="subTitle">by <b>{{tile.author}}</b></span>
-                <mu-button slot="action" icon>
-                  <mu-icon value="star_border"></mu-icon>
-                </mu-button>
-              </mu-grid-tile>
-            </mu-grid-list>
-          </mu-paper>
-        </mu-flex>
-      </mu-container>
+        <div class="nav-container">
+          <ul>
+            <router-link tag="li" class="nav-container-left" :to="item.path"  v-for="(item,index) in list" :key="index">
+              <img :src="item.image" />
+              <div class="nav-container-right">
+                <p>{{item.title}}</p>
+                <span>{{item.content}}</span>
+              </div>
+            </router-link>
+          </ul>
+        </div>
     </div>
 </template>
 
 <script>
-//
-import guestbook from '../../../assets/images/nav-icon1.jpg';
-import ChinaRen from '../../../assets/images/nav-icon2.jpg';
-import photos from '../../../assets/images/nav-icon3.jpg';
-import search from '../../../assets/images/nav-icon4.jpg';
 
 export default {
   name: 'NavList',
@@ -39,21 +22,25 @@ export default {
   data () {
     return {
       list: [{
-        image: guestbook,
-        title: 'guestbook',
-        author: 'Myron'
+        image: '../../../static/images/nav-icon1.jpg',
+        title: 'chat',
+        content:'聊天窗,在这里，留下你想说得话',
+        path: '/chat'
       }, {
-        image: ChinaRen,
+        image:'../../../static/images/nav-icon2.jpg',
         title: 'ChinaRen',
-        author: 'Linyu'
+        content:'校友录',
+        path: '/ChinaRen'
       }, {
-        image: search,
+        image:'../../../static/images/nav-icon3.jpg',
         title: 'search',
-        author: 'ruolin'
+        content:'查找校友',
+        path: '/search'
       }, {
-        image: photos,
+        image: '../../../static/images/nav-icon4.jpg',
         title: 'photos',
-        author: 'kakali'
+        content:'个人相册',
+        path: '/photos'
       }]
     }
   }
@@ -64,11 +51,32 @@ export default {
 <style lang="less" scoped>
 @import '../../../styles/main.less';
 .navlist{
-  .gridlist-demo{
-    margin: 0 auto;
-    // width: 360px;
-    // height: 450px;
-    overflow-y: auto;
+  width: 100%;
+  .h(362);
+  overflow-y: auto;
+  .nav-container{
+    .nav-container-left{
+      .padding(5,20,4,20);
+      display: flex;
+      border-bottom: 1px dashed #ccc;
+      img{
+        display: inline-block;
+        .w(100);
+        .h(80);
+      }
+      .nav-container-right{
+        .padding-left(20);
+        p{
+          .fs(20);
+          font-weight: 600;
+          .margin-bottom(10);
+        }
+        span{
+          .fs(14);
+          color: gray;
+        }
+      }
+    }
   }
 }
     
