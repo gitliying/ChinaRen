@@ -1,7 +1,7 @@
 <template>
   <div class="tabbar">
      <mt-tabbar v-model="selected">
-        <mt-tab-item id="home" class="tabbar-icon">
+        <mt-tab-item id="" class="tabbar-icon">
             <i slot="icon" class="fa fa-home" ></i>
                 首页
         </mt-tab-item>
@@ -10,7 +10,7 @@
                 留言板
         </mt-tab-item>    
         <mt-tab-item id="my" class="tabbar-icon">
-            <i slot="icon" class="fa fa-user-circle-o" ></i>
+            <i slot="icon" class="fa fa-user-circle-o"></i>
                 个人中心
         </mt-tab-item> 
     </mt-tabbar>
@@ -21,18 +21,22 @@
 
 
 export default {
-  name: 'Tabbar',
-  components:{},
-  data(){
-	  return{
-        selected: 'home',
-	  }
-  },
-   watch: {
-      selected: function (val, oldVal) {
-        console.log(val) // click后打印出当前mt-tab-item的id
-        this.$router.push(val);
-      }
+    name: 'Tabbar',
+    components:{},
+    data(){
+        return{
+            selected: '',
+            userEmail:localStorage.us,
+        }
+    },
+    watch: {
+        selected: function (val, oldVal) {
+            console.log(val) // click后打印出当前mt-tab-item的id
+            if( val == 'my' && typeof(this.userEmail) != 'undefined' ){
+                return this.$router.push(val+'/info');
+           }
+            this.$router.push(val);
+        }
     }
 
 }

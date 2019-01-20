@@ -55,30 +55,36 @@
 </template>
 
 <script>
+import axios from 'axios';
 	export default{
 		name:'Login',
 		components:{},
 		data(){
 			return{
 				userEmail:'',
-				userPass:'',
-				email:localStorage.getItem('u_email'),
-				pass:localStorage.getItem('u_pass')
+				userPass:''
 			}
 			
 		},
 		methods:{
 				backToHome(){
-					if(this.userEmail==this.email && this.userPass==this.pass && this.email!=''){
-						if(confirm('登录成功,是否跳转到首页？')){
-							this.$router.push('/');
-						}
-					}else{
-//						console.log(this.userEmail)
-//						console.log(this.userPass)
-						alert('哇哦，登录失败了呢');
+					var data = {
+						us:this.userEmail,
+						pass:this.userPass
 					}
-					
+					axios.post('http://localhost:3000/api/user/login',data)
+					.then((res)=>{
+						alert(res.data)
+						if(res.data == '登录ok'){
+							this.$router.push('/my/info');
+							//保持登录状态，存到localStorage
+							localStorage.setItem('us',this.userEmail);
+							localStorage.us = this.userEmail;
+						}
+					})
+					.catch((res)=>{
+						alert(res.data)
+					})
 				},
 				backToReg(){
 					this.$router.push('/my/reg');
@@ -87,16 +93,6 @@
 					this.$router.push('/');
 				}
 				
-			},
-			created(){
-				//判断是否已经是登录状态
-			this.email = localStorage.getItem('u_email');
-			if(this.email){
-				this.$router.push('/my/info');
-			}
-			// else{
-			// 	this.$router.push('/my/login');
-			// }
 			}
 	}
 </script>
@@ -146,7 +142,7 @@
 				i{
 					display: inline-block;
 					.w(30);
-					.fs(30);
+					.fs(20);
 					color:#26a2ff;
 				}
 			}

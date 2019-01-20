@@ -34,11 +34,17 @@
         		<input 
 				   v-model="userpass"
         			type="password" 
-        			@blur="passCheck()"
         			placeholder="请输入密码"/>
         	</div>
-        	<span 
-        		v-if="passErr">密码由大写字母+小写字母+数字，8-16位组成</span>
+			<div class="checkCode">
+				<span><i class="fa fa-envelope-open-o" aria-hidden="true"></i></span>
+				<div><input 
+				type="text"
+				placeholder="输入验证码"
+			    v-model="code" 
+				@keyup.enter="backToLogin()"/></div>
+				<span @click="getCode()">发送验证码</span>
+			</div>
         	<p>
         		<input type="checkbox"/>
         		记住我
@@ -58,12 +64,12 @@
 		components:{},
 		data(){
 			return{
-				userErr:false,
-				passErr:false,
 				userEmail:'',
 				userpass:'',
 				reg:null,
-				pass:null
+				pass:null,
+				userErr:false,
+				code:''
 			}
 			
 		},
@@ -74,49 +80,48 @@
 			},
 			userCheck(){
 				//邮箱验证
-				 let reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+				 this.reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+				if( !this.reg.test(this.userEmail) ){
+					this.userErr = true;
+				}else{
+					this.userErr = false;
+				}
+			},
+			getCode(){
+				//获取验证码
+				if(this.userEmail!='' && this.userPass!='' ){
+					var data = {
+						email:this.userEmail
+					}
+					axios.post('http://localhost:3000/api/user/getcode',data)
+					.then((res)=>{
+						alert(res.data.msg)
+					})
+					.catch((err)=>{
+						console.log(err);
+					})
+				}else{
+					alert("请先填写信息才能注册哦！")
+				}
+			},
+			backToLogin(){
 				//调用后台的 reg 接口 传数据给后台
 				var data = {
 					us:this.userEmail,
-					pass:this.userpass
+					pass:this.userpass,
+					code:this.code
 				}
 
-				// if(this.userEmail!='' && reg.test(this.userEmail) ){
 				axios.post('http://localhost:3000/api/user/reg',data)
 				.then((res)=>{
-					console.log('res:',res)
+					alert(res.data.msg)
+					if( res.data.err == 0 ){
+						this.$router.push('/my/login');
+					}
 				})
 				.catch((res)=>{
 					alert(res.data.msg)
 				})
-				// }
-				// else{
-						// alert('邮箱或密码不正确！请重试')
-					// }
-			},
-			passCheck(){
-				// pass:密码由大写字母+小写字母+数字，8-16位组成
-				this.pass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{8,16}$/;
-				if(!this.pass.test(this.userPass)){
-					console.log('pass'+this.passErr)
-					this.passErr=true;
-				}else{
-					this.passErr=false;
-				}
-			},
-			backToLogin(){
-				//判断userEmail userPass 是否都正确
-				if(this.userErr==false&&this.passErr==false&&this.userEmail!='' && this.reg.test(this.userEmail) && this.pass.test(this.userPass)){
-					//拿到userEmail，pass 存储到localStorage
-					 localStorage.setItem("u_email",this.userEmail);
-		        	 localStorage.setItem("u_pass",this.userPass);
-//		        	 if(){
-						alert('注册成功，请登录');
-						this.$router.push('/my/login');
-//					}
-				}else{
-					alert('哇哦！亲，注册失败了，请重试');
-				}
 				
 			},
 			quickBackToLogin(){
@@ -176,7 +181,7 @@
 				i{
 					display: inline-block;
 					.w(30);
-					.fs(30);
+					.fs(20);
 					color:#26a2ff;
 				}
 			}
@@ -185,6 +190,24 @@
 				.h(40);
 				.fs(16);
 			}
+		}
+		.checkCode{
+			div{
+				display: inline;
+				.w(180);
+				.padding-left(10);
+				input{
+					margin-left: 0;
+					.w(180);
+					.fs(16);
+				}
+			}
+			span{
+				.fs(16);
+				color:#26a2ff;
+				vertical-align: middle;
+			}
+			
 		}
 		span{
 			.fs(12);

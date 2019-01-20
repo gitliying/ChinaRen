@@ -3,6 +3,11 @@ const app=express();
 const bodyParser=require('body-parser')
 const db=require('./dbconnect.js')
 const path=require('path')
+
+//解决跨域
+const cors = require('cors');
+app.use(cors());
+
 //post参数解析
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
