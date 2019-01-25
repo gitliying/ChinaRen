@@ -26,6 +26,10 @@ Vue.component(SwipeItem.name, SwipeItem);
 import 'font-awesome/css/font-awesome.css';
 
 
+import jquery from 'jquery'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.min.js' 
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

@@ -8,6 +8,9 @@ import ChinaRen from '../components/pages/ChinaRen/ChinaRen.vue';
 import Search from '../components/pages/Search/Search.vue';
 import Photos from '../components/pages/Photos/Photos.vue';
 
+//留言板
+import Guestbook from '../components/pages/Guestbook/Guestbook.vue';
+
   //登陆注册 组件
 import My from     '../components/pages/My/My';
 import Info from '../components/pages/My/info';
@@ -42,6 +45,11 @@ export default new Router({
       path: '/photos',
       name: 'Photos',
       component: Photos
+    },
+    {
+      path: '/guestbook',
+      name: 'Guestbook',
+      component: Guestbook
     },
     {
       path: '/my',

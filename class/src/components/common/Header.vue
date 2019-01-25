@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <i class="fa fa-home"></i>
+    <i class="fa fa-home" @click="backToHome()"></i>
     {{title}}
   </div>
 </template>
@@ -16,6 +16,11 @@ export default {
 	  return{
 		  title:this.headTitle
 	  }
+  },
+  methods:{
+    backToHome(){
+      this.$router.push('/');
+    }
   }
 
 }

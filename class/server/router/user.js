@@ -18,12 +18,12 @@ const util=require('../utils/util.js')
  */
  let obj={}
 Router.post('/login',(req,res)=>{
-	let {us,pass}=req.body
-	userModel.find( {us,pass})
+	let {userEmail,userPass}=req.body
+	userModel.find({userEmail,userPass})
 	.then((data)=>{
 	   console.log(data)
-	   if (data.length>=1) { return res.send('登录ok')}
-	   	res.send("登录失败")
+	   if (data.length>=1) { return res.send('登录成功！')}
+	   	res.send("登录失败！")
 	})
 	
 })
@@ -38,17 +38,16 @@ Router.post('/login',(req,res)=>{
  * @apiSuccess {String} err Firstname of the User.
  * @apiSuccess {String} msg  Lastname of the User.
  */
-
 Router.post('/reg',(req,res)=>{
-	let {us,pass,code}=req.body
-	if (obj[us]!==code) { return res.send(util.sendData(-1,'验证码错误',null) )}
+	let {userName,userTel,userEmail,userPass,code}=req.body
+	if (obj[userEmail]!==code) { return res.send(util.sendData(-1,'验证码错误',null) )}
 	
-	userModel.find({us})
+	userModel.find({userEmail})
 	.then((data)=>{
 		if(data.length>=1){
 			return res.send(util.sendData(-1,"该邮箱已被注册，请登录",null))
 		}else if(data.length<1){
-			userModel.insertMany({us,pass})
+			userModel.insertMany({userName,userTel,userEmail,userPass,code})
 				.then((data)=>{
 					res.send(util.sendData(0,'注册ok 请登录',null))
 				})
@@ -60,35 +59,15 @@ Router.post('/reg',(req,res)=>{
 	})			
 })
 
-//保存用户信息
-Router.post('/info',(req,res)=>{
-	let {userName,userEmail,userTel,userAddress,userBirthday}=req.body;
-	userinfoModel.find({userEmail})
-	.then((data)=>{
-		console.log('SAVEDATA:',data.length)
-		if(data.length>1){
-			return res.send(util.sendData(-1,"已保存，您可以继续完善信息！",data))
-		}else if(data.length<=1){
-			userinfoModel.insertMany({userName,userEmail,userTel,userAddress,userBirthday})
-			.then((data)=>{
-				console.log('indata:',data)
-				res.send(util.sendData(0,'保存成功！',data))
-			})
-			.catch((err)=>{
-				console.log(err)
-				res.send(util.sendData(-1,'保存失败！',null))
-			})
-		}
-	})		
-})
 
 //根据_id,查询数据显示
 Router.post('/findById',(req,res)=>{
 	//接收数据
 	let {_id} = req.body;
 	if (!_id) {res.send(util.sendData(-1,'参数错误',null))}
-	userinfoModel.findById(_id)
+	userinfoModel.findById({_id})
 		.then((data)=>{
+			console.log('findbyid:',data)
 			res.send(util.sendData(0,'原始数据查询成功',data))
 		})
 		.catch((err)=>{
@@ -105,7 +84,7 @@ Router.post('/findByIdAndUpdate',(req,res)=>{
   	console.log('updateData:',updateData)
     userinfoModel.findByIdAndUpdate(updateData._id,updateData)
 	.then((data)=>{
-		console.log('yiyi:',data);
+		console.log('updateData :',data);
 		res.send(util.sendData(0,'保存更新成功！',data))
 	})
 	.catch((err)=>{

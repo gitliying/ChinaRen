@@ -1,9 +1,11 @@
 const  mongoose=require('mongoose')
  let Schema = mongoose.Schema;
-
+ 
   let userSchema=new Schema({
-  	us:{type:String,required:true},
-  	pass:{type:String,required:true}
+    userName:{type:String,required:true},
+    userTel:{type:String,required:true},
+    userEmail:{type:String,required:true},
+    userPass:{type:String,required:true}
   })
   // type 字段类型  required 是否必须
  let usermodel=mongoose.model('user', userSchema);

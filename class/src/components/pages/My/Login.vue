@@ -69,17 +69,17 @@ import axios from 'axios';
 		methods:{
 				backToHome(){
 					var data = {
-						us:this.userEmail,
-						pass:this.userPass
+						userEmail:this.userEmail,
+						userPass:this.userPass
 					}
 					axios.post('http://localhost:3000/api/user/login',data)
 					.then((res)=>{
 						alert(res.data)
-						if(res.data == '登录ok'){
+						if(res.data == '登录成功！'){
 							this.$router.push('/my/info');
 							//保持登录状态，存到localStorage
-							localStorage.setItem('us',this.userEmail);
-							localStorage.us = this.userEmail;
+							localStorage.setItem('userEmail',this.userEmail);
+							localStorage.userEmail= this.userEmail;
 						}
 					})
 					.catch((res)=>{

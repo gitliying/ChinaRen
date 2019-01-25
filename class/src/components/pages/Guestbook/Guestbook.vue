@@ -1,5 +1,5 @@
 <template>
-  <div class="ChinaRen">
+  <div class="guestbook">
     <Header :headTitle='headTitle'></Header>
   </div>
 </template>
@@ -10,11 +10,11 @@
 import Header from '../../common/Header.vue';
 
 export default {
-  name: 'ChinaRen',
+  name: 'Guestboopk',
   components:{Header},
   data(){
 	  return{
-		  headTitle:'校友通讯录'
+		  headTitle:'留言板'
 	  }
   }
 

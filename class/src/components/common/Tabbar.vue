@@ -26,7 +26,7 @@ export default {
     data(){
         return{
             selected: '',
-            userEmail:localStorage.us,
+            userEmail:localStorage.userEmail,
         }
     },
     watch: {
