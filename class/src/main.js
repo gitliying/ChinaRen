@@ -25,12 +25,12 @@ Vue.component(SwipeItem.name, SwipeItem);
 //引入font-awesome字体图标
 import 'font-awesome/css/font-awesome.css';
 
-
 import jquery from 'jquery'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js' 
 
 Vue.config.productionTip = false
+
 
 /* eslint-disable no-new */
 new Vue({

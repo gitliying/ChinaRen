@@ -59,6 +59,27 @@ Router.post('/reg',(req,res)=>{
 	})			
 })
 
+//search 
+Router.post('/search',(req,res)=>{
+
+	let {userName}=req.body;
+
+	userModel.find({'userName':{ '$regex': userName} })
+	.then((data)=>{
+		if(data.length>=1){
+			console.log(data)
+			return res.send(util.sendData(0,"搜索成功",data))
+		}else if(data.length<1){
+			return res.send(util.sendData(-1,"搜索失败",null))
+		}
+	})
+	.catch((err)=>{
+		console.log(err)
+		res.send(util.sendData(-1,'搜索失败',null))
+	})			
+})
+
+
 
 //根据_id,查询数据显示
 Router.post('/findById',(req,res)=>{
