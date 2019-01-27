@@ -1,6 +1,7 @@
 <template>
   <div class="ChinaRen">
     <Header :headTitle='headTitle'></Header>
+    <div></div>
   </div>
 </template>
 

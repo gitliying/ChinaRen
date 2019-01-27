@@ -59,6 +59,44 @@ Router.post('/reg',(req,res)=>{
 	})			
 })
 
+//留言板接口 插入留言数据到数据库
+Router.post('/guestbook',(req,res)=>{
+	let {userName,content,datetime}=req.body;
+
+	userinfoModel.insertMany({userName,content,datetime})
+	.then((data)=>{
+		res.send(util.sendData(0,'留言成功',data))
+	})
+	.catch((err)=>{
+		console.log(err)
+		res.send(util.sendData(-1,'留言失败',null))
+	})		
+})
+
+//显示留言
+Router.post('/showGuestbook',(req,res)=>{
+	let total = 0;
+	let qty = Number(req.body.qty);
+	let targetPage = Number(req.body.targetPage);
+	let {userName} = req.body;
+
+	userinfoModel.find({userName:userName})
+	.sort({'time':-1})
+	.then((res)=>{
+    	total = res.length;
+    	return userinfoModel.find({userName:userName}).sort({'time':-1}).limit(qty).skip((targetPage-1)*qty);
+    })
+	.then((data)=>{
+		//数据结构改变，前端接收注意
+		let array={total:total,guestbookList:data}
+	 	res.send(util.sendData(0,'查询成功',array))
+	})
+	.catch((err)=>{
+		console.log(err)
+		res.send(util.sendData(-1,'查询失败',null))
+	})	
+})
+
 //search 
 Router.post('/search',(req,res)=>{
 

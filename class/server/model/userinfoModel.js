@@ -3,10 +3,8 @@ const  mongoose=require('mongoose')
 
   let userinfoSchema=new Schema({
     userName:{type:String},
-    userEmail:{type:String},
-    userTel:{type:String,required:true},
-    userAddress:{type:String},
-    userBirthday:{type:String}
+    content:{type:String},
+    datetime:{type:String}
     
   })
   // type 字段类型  required 是否必须

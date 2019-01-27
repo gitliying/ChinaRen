@@ -29,6 +29,13 @@ import jquery from 'jquery'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js' 
 
+import moment from 'moment/moment'
+Vue.filter('moment', function (value, formatString) {
+    formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
+return moment(value).format(formatString);
+
+});
+
 Vue.config.productionTip = false
 
 
